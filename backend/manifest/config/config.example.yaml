@@ -1,0 +1,260 @@
+server:
+    # 基本配置
+    address:             ":8000"                      # 本地监听地址。默认":80"，多个地址以","号分隔。例如："192.168.2.3:8000,10.0.3.10:8001"
+    # httpsAddr:           ":443"                           # TLS/HTTPS配置，同时需要配置证书和密钥。默认关闭。配置格式同上。
+    # httpsCertPath:       ""                           # TLS/HTTPS证书文件本地路径，建议使用绝对路径。默认关闭
+    # httpsKeyPath:        ""                           # TLS/HTTPS密钥文件本地路径，建议使用绝对路径。默认关闭
+    # readTimeout:         "60s"                        # 请求读取超时时间，一般不需要配置。默认为60秒
+    # writeTimeout:        "0"                          # 数据返回写入超时时间，一般不需要配置。默认不超时（0）
+    # idleTimeout:         "60s"                        # 仅当Keep-Alive开启时有效，请求闲置时间。默认为60秒
+    # maxHeaderBytes:      "10240"                      # 请求Header大小限制（Byte）。默认为10KB
+    # keepAlive:           true                         # 是否开启Keep-Alive功能。默认true
+    # serverAgent:         "GoFrame HTTP Server"        # 服务端Agent信息。默认为"GoFrame HTTP Server"
+
+    # 接口文档
+    openapiPath: "/api.json" # OpenAPI接口文档地址
+    swaggerPath: "/swagger"  # 内置SwaggerUI展示地址
+
+#     # 静态服务配置
+#     indexFiles:          ["index.html","index.htm"]   # 自动首页静态文件检索。默认为["index.html", "index.htm"]
+#     indexFolder:         false                        # 当访问静态文件目录时，是否展示目录下的文件列表。默认关闭，那么请求将返回403
+#     serverRoot:          ""                           # 静态文件服务的目录根路径，配置时自动开启静态文件服务。默认关闭
+#     searchPaths:         []                           # 提供静态文件服务时额外的文件搜索路径，当根路径找不到时则按照顺序在搜索目录查找。默认关闭
+#     fileServerEnabled:   false                        # 静态文件服务总开关。默认false
+
+#     # Cookie配置
+#     cookieMaxAge:        "365d"             # Cookie有效期。默认为365天
+#     cookiePath:          "/"                # Cookie有效路径。默认为"/"表示全站所有路径下有效
+#     cookieDomain:        ""                 # Cookie有效域名。默认为当前配置Cookie时的域名
+
+#     # Sessions配置
+#     sessionMaxAge:       "24h"              # Session有效期。默认为24小时
+#     sessionIdName:       "gfsessionid"      # SessionId的键名名称。默认为gfsessionid
+#     sessionCookieOutput: true               # Session特性开启时，是否将SessionId返回到Cookie中。默认true
+#     sessionPath:         "/tmp/gsessions"   # Session存储的文件目录路径。默认为当前系统临时目录下的gsessions目录
+
+#     # 日志基本配置
+#     # 此配置类似nginx，主要对请求日志的记录
+#     logPath:             ""                 # 日志文件存储目录路径，建议使用绝对路径。默认为空，表示关闭
+#     logStdout:           true               # 日志是否输出到终端。默认为true
+#     errorStack:          true               # 当Server捕获到异常时是否记录堆栈信息到日志中。默认为true
+#     errorLogEnabled:     true               # 是否记录异常日志信息到日志中。默认为true
+#     errorLogPattern:     "error-{Ymd}.log"  # 异常错误日志文件格式。默认为"error-{Ymd}.log"
+#     accessLogEnabled:    false              # 是否记录访问日志。默认为false
+#     accessLogPattern:    "access-{Ymd}.log" # 访问日志文件格式。默认为"access-{Ymd}.log"
+
+#     # 日志扩展配置(参数日志组件配置)
+#     # 此配置主要影响server（ghttp模块）日志，如web服务监听端口号、web服务路由，不会对 g.Log 产生影响
+#     logger:
+#       path:                  ""            # 日志文件路径。默认为空，表示关闭，仅输出到终端
+#       file:                  "{Y-m-d}.log" # 日志文件格式。默认为"{Y-m-d}.log"
+#       prefix:                ""            # 日志内容输出前缀。默认为空
+#       level:                 "all"         # 日志输出级别
+#       stdout:                true          # 日志是否同时输出到终端。默认true
+#       rotateSize:            0             # 按照日志文件大小对文件进行滚动切分。默认为0，表示关闭滚动切分特性
+#       rotateExpire:          0             # 按照日志文件时间间隔对文件滚动切分。默认为0，表示关闭滚动切分特性
+#       rotateBackupLimit:     0             # 按照切分的文件数量清理切分文件，当滚动切分特性开启时有效。默认为0，表示不备份，切分则删除
+#       rotateBackupExpire:    0             # 按照切分的文件有效期清理切分文件，当滚动切分特性开启时有效。默认为0，表示不备份，切分则删除
+#       rotateBackupCompress:  0             # 滚动切分文件的压缩比（0-9）。默认为0，表示不压缩
+#       rotateCheckInterval:   "1h"          # 滚动切分的时间检测间隔，一般不需要设置。默认为1小时
+
+#     # PProf配置
+#     pprofEnabled:        false              # 是否开启PProf性能调试特性。默认为false
+#     pprofPattern:        ""                 # 开启PProf时有效，表示PProf特性的页面访问路径，对当前Server绑定的所有域名有效。
+
+#     # 其他配置
+#     clientMaxBodySize:   810241024          # 客户端最大Body上传限制大小，影响文件上传大小(Byte)。默认为8*1024*1024=8MB
+#     formParsingMemory:   1048576            # 解析表单时的缓冲区大小(Byte)，一般不需要配置。默认为1024*1024=1MB
+#     nameToUriType:       0                  # 路由注册中使用对象注册时的路由生成规则。默认为0
+#     routeOverWrite:      false              # 当遇到重复路由注册时是否强制覆盖。默认为false，重复路由存在时将会在启动时报错退出
+#     dumpRouterMap:       true               # 是否在Server启动时打印所有的路由列表。默认为true
+#     graceful:            false              # 是否开启平滑重启特性，开启时将会在本地增加10000的本地TCP端口用于进程间通信。默认false             
+#     gracefulTimeout:     2                  # 父进程在平滑重启后多少秒退出，默认2秒。若请求耗时大于该值，可能会导致请求中断
+# 日志配置
+logger:
+  # path:                  ""                    # 日志文件路径。默认为空，表示关闭，仅输出到终端
+  # prefix:                ""                    # 日志内容输出前缀。默认为空
+  level:                 "all"                 # 日志输出级别
+  # timeFormat:            "2006-01-02T15:04:05" # 自定义日志输出的时间格式，使用Golang标准的时间格式配置
+  # ctxKeys:               []                    # 自定义Context上下文变量名称，自动打印Context的变量到日志中。默认为空
+  # header:                true                  # 是否打印日志的头信息。默认true
+  stdout:                true                  # 日志是否同时输出到终端。默认true
+  # rotateSize:            0                     # 按照日志文件大小对文件进行滚动切分。默认为0，表示关闭滚动切分特性
+  # rotateExpire:          0                     # 按照日志文件时间间隔对文件滚动切分。默认为0，表示关闭滚动切分特性
+  # rotateBackupLimit:     0                     # 按照切分的文件数量清理切分文件，当滚动切分特性开启时有效。默认为0，表示不备份，切分则删除
+  # rotateBackupExpire:    0                     # 按照切分的文件有效期清理切分文件，当滚动切分特性开启时有效。默认为0，表示不备份，切分则删除
+  # rotateBackupCompress:  0                     # 滚动切分文件的压缩比（0-9）。默认为0，表示不压缩
+  # rotateCheckInterval:   "1h"                  # 滚动切分的时间检测间隔，一般不需要设置。默认为1小时
+  # stdoutColorDisabled:   false                 # 关闭终端的颜色打印。默认开启
+  # writerColorEnable:     false                 # 日志文件是否带上颜色。默认false，表示不带颜色
+
+# ============================================================================
+# 大模型配置（AI 换装）
+# 每个模型为一个独立条目，name 为前端请求用的别名，provider 决定协议。
+# apiKey / baseURL / model 全部可配；apiKey 也支持通过 envKey 指定的环境变量注入。
+# ============================================================================
+llm:
+  models:
+    # OpenAI GPT-Image-2（官方当前主推；gpt-image-1 已于 2026-10 停服）
+    gpt-image:
+      provider: openai          # OpenAI Images 兼容协议
+      apiKey: ""                # 或用环境变量 OPENAI_API_KEY
+      envKey: "OPENAI_API_KEY"
+      baseURL: "https://api.openai.com/v1"
+      model: "gpt-image-2"
+
+    # 豆包（火山方舟）Seedream 系列 —— 国内可用
+    # 在火山方舟控制台开通模型、获取 Ark API Key
+    doubao:
+      provider: doubao         # 火山方舟协议（复用 images/generations，但请求体为火山格式）
+      apiKey: ""                # 或用环境变量 ARK_API_KEY
+      envKey: "ARK_API_KEY"
+      baseURL: "https://ark.cn-beijing.volces.com/api/v3"
+      model: "doubao-seedream-3-0-t2i-250415"
+
+    # Google Gemini 图像（Nano Banana 2，即 gemini-3.1-flash-image）
+    gemini:
+      provider: gemini          # Google 原生 generateContent 协议
+      apiKey: ""                # 或用环境变量 GEMINI_API_KEY
+      envKey: "GEMINI_API_KEY"
+      baseURL: "https://generativelanguage.googleapis.com/v1beta"
+      model: "gemini-3.1-flash-image"
+
+    # 本地 ComfyUI 固定工作流：Qwen-Image-Edit-2511（优先默认）
+    comfyui:
+      provider: comfyui
+      baseURL: "http://127.0.0.1:8188"
+      model: "qwen-image-edit-2511"
+      workflowPath: "workflows/comfyui_qwen_image_edit_2511_api.json"
+      personNode: "7"
+      garmentNode: "8"
+      promptNode: "11"
+      seedNode: "15"
+      seed: 0
+      outputNode: "17"
+      pollIntervalMs: 1000
+      timeoutSeconds: 900
+
+    # 本地 ComfyUI：Qwen 独立配置（优先）
+    comfyui-qwen:
+      provider: comfyui
+      baseURL: "http://127.0.0.1:8188"
+      model: "qwen-image-edit-2511"
+      workflowPath: "workflows/comfyui_qwen_image_edit_2511_api.json"
+      personNode: "7"
+      garmentNode: "8"
+      promptNode: "11"
+      seedNode: "15"
+      seed: 0
+      outputNode: "17"
+      pollIntervalMs: 1000
+      timeoutSeconds: 900
+
+    # 本地 ComfyUI：MiniMax H3 独立配置（兼容保留）
+    comfyui-h3:
+      provider: comfyui
+      baseURL: "http://127.0.0.1:8188"
+      model: "h3-ref2va-still"
+      workflowPath: "workflows/comfyui_h3_ref2va_still_api.json"
+      personNode: "16"
+      garmentNode: "17"
+      promptNode: "6"
+      seedNode: "10"
+      seed: 246813579 # 已验证的稳定种子；设为 -1 时每次随机
+      outputNode: "19"
+      pollIntervalMs: 1000
+      timeoutSeconds: 900
+
+    # 以下为可选的国内模型示例（默认注释掉，按需开启）
+    # 通义万相（阿里云百炼，OpenAI 兼容）
+    # qwen:
+    #   provider: openai
+    #   apiKey: ""
+    #   envKey: "DASHSCOPE_API_KEY"
+    #   baseURL: "https://dashscope.aliyuncs.com/compatible-mode/v1"
+    #   model: "wanx2.1-t2i-turbo"
+
+    # 智谱 CogView（OpenAI 兼容）
+    # zhipu:
+    #   provider: openai
+    #   apiKey: ""
+    #   envKey: "ZHIPU_API_KEY"
+    #   baseURL: "https://open.bigmodel.cn/api/paas/v4"
+    #   model: "cogview-3-flash"
+
+    # 硅基流动 / 其他 OpenAI 兼容中转站
+    # siliconflow:
+    #   provider: openai
+    #   apiKey: ""
+    #   envKey: "SILICONFLOW_API_KEY"
+    #   baseURL: "https://api.siliconflow.cn/v1"
+    #   model: "Kwai-Kolors/Kolors"
+
+# 接口安全与访问控制配置
+security:
+  authRequired: true                # 是否强制 Bearer Token 访问鉴权。本地调试可设为 false，线上部署必须为 true
+  apiKeysEnv: "TRYON_API_KEYS"      # 读取有效后端 Token 的环境变量名（多 Token 以英文逗号分隔，每个 32~512 字符）
+  trustedOrigins:                   # CORS 严格白名单（精确匹配，禁止 *）
+    - "https://paipiange.github.io"
+    - "http://localhost:3000"
+    - "http://127.0.0.1:3000"
+  allowPrivateNetwork: false        # 是否允许来自私有网络的 PNA 预检
+  rateLimit:
+    requestsPerMinute: 10           # 单调用方每分钟请求速率上限
+    burst: 3                        # 允许短时间突发容量
+    limiterIdleMinutes: 30          # 限流器闲置自动清理周期（分钟）
+    dailyRequestsPerPrincipal: 100  # 单调用方每日最高调用成功额度（自然日重置）
+  concurrency:
+    global: 2                       # 全局最大生图并发数
+    perPrincipal: 1                 # 单调用方最大生图并发数
+
+# 请求体与图片安全限制
+upload:
+  maxRequestBodyBytes: 25165824     # 整个 HTTP JSON 请求体最大字节数（24 MiB）
+  maxEncodedImageBytes: 12582912    # 单张 Base64 编码字符串最大长度（12 MiB）
+  maxDecodedImageBytes: 8388608     # 单张图片解码后真实文件大小上限（8 MiB）
+  maxCombinedDecodedBytes: 16777216 # 两张图片（人像+服装）解码后合计字节上限（16 MiB）
+  minWidth: 256                     # 图片最小宽度（像素）
+  minHeight: 256                    # 图片最小高度（像素）
+  maxWidth: 8192                    # 图片最大宽度（像素）
+  maxHeight: 8192                   # 图片最大高度（像素）
+  maxPixels: 20000000               # 单图最大像素总量（2000万像素，防内存耗尽）
+  allowedMimeTypes:                 # 允许的真实图片格式
+    - "image/jpeg"
+    - "image/png"
+    - "image/webp"
+
+# 配置数据库
+# database:
+#   default:
+#   - link: "mysql:root:12345678@tcp(127.0.0.1:3306)/test"
+# database:
+#   分组名称:
+#     host:                  "地址"
+#     port:                  "端口"
+#     user:                  "账号"
+#     pass:                  "密码"
+#     name:                  "数据库名称"
+#     type:                  "数据库类型(如：mariadb/tidb/mysql/pgsql/mssql/sqlite/oracle/clickhouse/dm)"
+#     link:                  "(可选)自定义数据库链接信息，当该字段被设置值时，以上链接字段(Host,Port,User,Pass,Name)将失效，但是type必须有值"         
+#     extra:                 "(可选)不同数据库的额外特性配置，由底层数据库driver定义"
+#     role:                  "(可选)数据库主从角色(master/slave)，不使用应用层的主从机制请均设置为master"
+#     debug:                 "(可选)开启调试模式"
+#     prefix:                "(可选)表名前缀"
+#     dryRun:                "(可选)ORM空跑(只读不写)"
+#     charset:               "(可选)数据库编码(如: utf8/gbk/gb2312)，一般设置为utf8"
+#     protocol:              "(可选)数据库连接协议，默认为TCP"
+#     weight:                "(可选)负载均衡权重，用于负载均衡控制，不使用应用层的负载均衡机制请置空"
+#     timezone:              "(可选)时区配置，例如:Local"
+#     namespace:             "(可选)用以支持个别数据库服务Catalog&Schema区分的问题，原有的Schema代表数据库名称，而NameSpace代表个别数据库服务的Schema"
+#     maxIdle:               "(可选)连接池最大闲置的连接数(默认10)"
+#     maxOpen:               "(可选)连接池最大打开的连接数(默认无限制)"
+#     maxLifetime:           "(可选)连接对象可重复使用的时间长度(默认30秒)"
+#     queryTimeout:          "(可选)查询语句超时时长(默认无限制，注意ctx的超时时间设置)"
+#     execTimeout:           "(可选)写入语句超时时长(默认无限制，注意ctx的超时时间设置)"
+#     tranTimeout:           "(可选)事务处理超时时长(默认无限制，注意ctx的超时时间设置)"
+#     prepareTimeout:        "(可选)预准备SQL语句执行超时时长(默认无限制，注意ctx的超时时间设置)"
+#     createdAt:             "(可选)自动创建时间字段名称"
+#     updatedAt:             "(可选)自动更新时间字段名称"
+#     deletedAt:             "(可选)软删除时间字段名称"
+#     timeMaintainDisabled:  "(可选)是否完全关闭时间更新特性，true时CreatedAt/UpdatedAt/DeletedAt都将失效"

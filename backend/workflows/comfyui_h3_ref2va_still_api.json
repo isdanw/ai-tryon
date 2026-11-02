@@ -1,0 +1,109 @@
+{
+  "1": {
+    "inputs": {
+      "mode": "resident",
+      "projection": "mmh3-4b-ClipProj-celeb-mlp.safetensors",
+      "device": "cuda:0",
+      "clip_name": "qwen3vl_4b_fp8_scaled.safetensors",
+      "type": "auto"
+    },
+    "class_type": "ClipProjLoader"
+  },
+  "2": {
+    "inputs": {
+      "weight_dtype": "default",
+      "unet_name": "minimax_h3_fl2va_pruned_w4a8_mixed.safetensors"
+    },
+    "class_type": "UNETLoader"
+  },
+  "3": {
+    "inputs": {
+      "shift_video": 12.0,
+      "shift_audio": 3.0,
+      "model": ["2", 0]
+    },
+    "class_type": "MiniMaxH3SigmaShift"
+  },
+  "4": {
+    "inputs": {"vae_name": "minimax_h3_video_vae_fp16.safetensors"},
+    "class_type": "VAELoader"
+  },
+  "5": {
+    "inputs": {"vae_name": "minimax_h3_audio_vae_fp32.safetensors"},
+    "class_type": "VAELoader"
+  },
+  "6": {
+    "inputs": {
+      "clip": ["1", 0],
+      "width": 352,
+      "height": 640,
+      "length": 124,
+      "prompt": "__TRYON_PROMPT__",
+      "vae": ["4", 0],
+      "audio_vae": ["5", 0],
+      "ref_image_size": "match",
+      "ref_images.ref_image_0": ["16", 0],
+      "ref_images.ref_image_1": ["17", 0]
+    },
+    "class_type": "MiniMaxH3ReferenceToVideo"
+  },
+  "7": {
+    "inputs": {"model": ["105:201", 0], "conditioning": ["6", 0]},
+    "class_type": "BasicGuider"
+  },
+  "8": {
+    "inputs": {"sampler_name": "res_multistep"},
+    "class_type": "KSamplerSelect"
+  },
+  "9": {
+    "inputs": {
+      "scheduler": "simple",
+      "model": ["105:201", 0],
+      "steps": 4,
+      "denoise": 1.0
+    },
+    "class_type": "BasicScheduler"
+  },
+  "10": {
+    "inputs": {"noise_seed": 0},
+    "class_type": "RandomNoise"
+  },
+  "11": {
+    "inputs": {
+      "sigmas": ["9", 0],
+      "guider": ["7", 0],
+      "noise": ["10", 0],
+      "sampler": ["8", 0],
+      "latent_image": ["6", 1]
+    },
+    "class_type": "SamplerCustomAdvanced"
+  },
+  "12": {
+    "inputs": {"samples": ["11", 0], "vae": ["4", 0]},
+    "class_type": "VAEDecode"
+  },
+  "16": {
+    "inputs": {"image": "__PERSON_IMAGE__"},
+    "class_type": "LoadImage"
+  },
+  "17": {
+    "inputs": {"image": "__GARMENT_IMAGE__"},
+    "class_type": "LoadImage"
+  },
+  "18": {
+    "inputs": {"image": ["12", 0], "batch_index": 31, "length": 1},
+    "class_type": "ImageFromBatch"
+  },
+  "19": {
+    "inputs": {"images": ["18", 0], "filename_prefix": "tryon/local"},
+    "class_type": "SaveImage"
+  },
+  "105:201": {
+    "inputs": {
+      "strength_model": 1.0,
+      "model": ["3", 0],
+      "lora_name": "minimax_h3_fl2v_turbo_4step_v1.0_768p_comfyui_resized_avg_rank_21_bf16.safetensors"
+    },
+    "class_type": "LoraLoaderModelOnly"
+  }
+}

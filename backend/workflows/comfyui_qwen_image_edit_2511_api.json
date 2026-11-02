@@ -1,0 +1,134 @@
+{
+  "1": {
+    "inputs": {
+      "unet_name": "qwen_image_edit_2511_int8_convrot.safetensors",
+      "weight_dtype": "default"
+    },
+    "class_type": "UNETLoader"
+  },
+  "2": {
+    "inputs": {
+      "shift": 3.1,
+      "model": ["1", 0]
+    },
+    "class_type": "ModelSamplingAuraFlow"
+  },
+  "3": {
+    "inputs": {
+      "strength": 1.0,
+      "pre_cfg": false,
+      "model": ["2", 0]
+    },
+    "class_type": "CFGNorm"
+  },
+  "4": {
+    "inputs": {
+      "strength_model": 1.0,
+      "lora_name": "Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16.safetensors",
+      "model": ["3", 0]
+    },
+    "class_type": "LoraLoaderModelOnly"
+  },
+  "5": {
+    "inputs": {
+      "clip_name": "qwen_2.5_vl_7b_fp8_scaled.safetensors",
+      "type": "qwen_image",
+      "device": "default"
+    },
+    "class_type": "CLIPLoader"
+  },
+  "6": {
+    "inputs": {
+      "vae_name": "qwen_image_vae.safetensors"
+    },
+    "class_type": "VAELoader"
+  },
+  "7": {
+    "inputs": {
+      "image": "__PERSON_IMAGE__"
+    },
+    "class_type": "LoadImage"
+  },
+  "8": {
+    "inputs": {
+      "image": "__GARMENT_IMAGE__"
+    },
+    "class_type": "LoadImage"
+  },
+  "9": {
+    "inputs": {
+      "image": ["7", 0]
+    },
+    "class_type": "FluxKontextImageScale"
+  },
+  "10": {
+    "inputs": {
+      "pixels": ["9", 0],
+      "vae": ["6", 0]
+    },
+    "class_type": "VAEEncode"
+  },
+  "11": {
+    "inputs": {
+      "clip": ["5", 0],
+      "vae": ["6", 0],
+      "image1": ["9", 0],
+      "image2": ["8", 0],
+      "prompt": "__TRYON_PROMPT__"
+    },
+    "class_type": "TextEncodeQwenImageEditPlus"
+  },
+  "12": {
+    "inputs": {
+      "conditioning": ["11", 0],
+      "reference_latents_method": "index_timestep_zero"
+    },
+    "class_type": "FluxKontextMultiReferenceLatentMethod"
+  },
+  "13": {
+    "inputs": {
+      "clip": ["5", 0],
+      "vae": ["6", 0],
+      "image1": ["9", 0],
+      "image2": ["8", 0],
+      "prompt": ""
+    },
+    "class_type": "TextEncodeQwenImageEditPlus"
+  },
+  "14": {
+    "inputs": {
+      "conditioning": ["13", 0],
+      "reference_latents_method": "index_timestep_zero"
+    },
+    "class_type": "FluxKontextMultiReferenceLatentMethod"
+  },
+  "15": {
+    "inputs": {
+      "seed": 0,
+      "steps": 4,
+      "cfg": 1.0,
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "denoise": 1.0,
+      "model": ["4", 0],
+      "positive": ["12", 0],
+      "negative": ["14", 0],
+      "latent_image": ["10", 0]
+    },
+    "class_type": "KSampler"
+  },
+  "16": {
+    "inputs": {
+      "samples": ["15", 0],
+      "vae": ["6", 0]
+    },
+    "class_type": "VAEDecode"
+  },
+  "17": {
+    "inputs": {
+      "filename_prefix": "tryon/local",
+      "images": ["16", 0]
+    },
+    "class_type": "SaveImage"
+  }
+}

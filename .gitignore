@@ -1,0 +1,24 @@
+# WorkBuddy 内部文件（含 appId、本地路径、分享链接等，不应提交）
+.workbuddy/
+*.genie
+
+# 系统/编辑器
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+
+# 环境变量与密钥
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+id_rsa*
+*.p12
+*.pfx
+
+# 本地配置文件与日志（禁止提交任何真实 Key 与凭据）
+config.yaml
+**/config/config.yaml
+*.log

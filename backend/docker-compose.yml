@@ -1,0 +1,19 @@
+services:
+  costume-tryon:
+    build:
+      context: .
+      dockerfile: manifest/docker/Dockerfile
+    container_name: costume-tryon-backend
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    env_file:
+      - path: ./.env
+        required: false
+    environment:
+      # 可在当前目录创建 .env 文件注入，或直接修改
+      - GF_SERVER_ADDRESS=:8000
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - ARK_API_KEY=${ARK_API_KEY:-}
+      - GEMINI_API_KEY=${GEMINI_API_KEY:-}
+      - DASHSCOPE_API_KEY=${DASHSCOPE_API_KEY:-}
